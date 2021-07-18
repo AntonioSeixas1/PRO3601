@@ -1,6 +1,8 @@
 ﻿IMPORT $,STD;
 
-Persons := $.File_Test.File;
-profileResults := STD.DataPatterns.Profile(Persons);
+Persons := $.File_BolsaFamilia.File;
+// profileResults := STD.DataPatterns.Profile(Persons);
 
-OUTPUT(profileResults);
+OUTPUT(Persons);
+
+
