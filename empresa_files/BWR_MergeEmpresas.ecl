@@ -25,6 +25,4 @@ E10_s := SORT(E10, E10.CNPJ_BASICO);
 
 Empresas := MERGE(E1_s, E2_s, E3_s, E4_s, E5_s, E6_s, E7_s, E8_s, E9_s, E10_s, SORTED(CNPJ_BASICO));
 
-OUTPUT(COUNT(E1) + COUNT(E2) + COUNT(E3) + COUNT(E4) + COUNT(E5) + COUNT(E6) + COUNT(E7) + COUNT(E8) + COUNT(E9) +COUNT(E10) )
-
-//OUTPUT(Empresas,, '~grupo7::empresas');
+OUTPUT(Empresas,, '~grupo7::empresas');

@@ -1,4 +1,4 @@
-﻿EXPORT File_BolsaFamilia := MODULE
+﻿EXPORT File_BolsaFamilia_6 := MODULE
  EXPORT Layout := RECORD 
 	
     unsigned3 MES_REFERENCIA;
@@ -13,5 +13,5 @@
 
  END;
  //YOUR initials between CLASS and Intro:
- EXPORT File := DATASET('~grupo7::202101_bolsafamilia_pagamentos',Layout,CSV(heading(1)));
+ EXPORT File := DATASET('~grupo7::202106_bolsafamilia_pagamentos',Layout,CSV(heading(1)));
 END;
