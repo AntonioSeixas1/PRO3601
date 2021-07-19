@@ -1,6 +1,6 @@
-﻿EXPORT file_socio1 := MODULE
+﻿EXPORT file_socio3 := MODULE
  EXPORT Layout := RECORD 
-    STRING8 CNPJ_BASICO;
+   STRING8 CNPJ_BASICO;
     UNSIGNED1 INDENTIFICADOR_DE_SOCIO;
     STRING149 NOME_SOCIO_RAZAO_SOCIAL;
     STRING14 CNPJ_CPF_SOCIO;
@@ -13,7 +13,7 @@
     UNSIGNED1 FAIXA_ETARIA;
  END;
  //YOUR initials between CLASS and Intro:
- EXPORT File := DATASET('~grupo7::socios_1',Layout,CSV);
+ EXPORT File := DATASET('~grupo7::socios_3',Layout,CSV);
 END;
 
 
