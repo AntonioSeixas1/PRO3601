@@ -1,0 +1,8 @@
+Estabelecimentos: CNPJ Básico (8 primeiros dígitos), CNPJ Ordem (9 ao 12) e CNPJ DV (2 últimos dígitos) em formato inteiro, sem pontos.
+
+Trabalho Escravo: CNPJ ou CPF com pontos, traços e barras.
+
+Sócios: CNPJ Básico não mascarado e CNPJ/CPF do sócio mascarado em formato inteiro (***NNNNNN**)
+
+
+
