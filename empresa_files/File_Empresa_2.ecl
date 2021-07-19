@@ -1,4 +1,4 @@
-﻿EXPORT File_Empresa := MODULE
+﻿EXPORT File_Empresa_2 := MODULE
  EXPORT Layout := RECORD 
 	
     UNSIGNED4	 CNPJ_BASICO;
@@ -11,5 +11,5 @@
 
  END;
  //YOUR initials between CLASS and Intro:
- EXPORT File := DATASET('~grupo7::empresa_1',Layout,CSV);
+ EXPORT File := DATASET('~grupo7::empresa_2',Layout,CSV);
 END;
