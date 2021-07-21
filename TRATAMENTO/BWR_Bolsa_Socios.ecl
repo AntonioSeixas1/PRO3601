@@ -1,55 +1,51 @@
 ﻿IMPORT $, STD;
 
-Bolsa := $.File_MergedBolsaFamilia;
+BolsaFamilia := $.File_MergedBolsaFamilia;
 Socios := $.File_MergedSocios;
 
 // DATABASE Bolsa Familia
 // Removendo os registros cujo CPF não está preenchido e tirando a pontuação dos CPF'S/CNPJ'S
-Layout_BolsaSemPontos := RECORD
-	CPF_FAVORECIDO := STD.Str.FilterOut(Bolsa.File.CPF_FAVORECIDO, '*.-');
-	//STRING20 Primeiro_Nome := STD.STr.SplitWords(Bolsa.File.NOME_FAVORECIDO,' ')[1];
-	Bolsa.File;
-	
+Layout_Bolsa_Familia_Filtered := RECORD
+	BolsaFamilia.File.NOME_FAVORECIDO;
+	CPF_FAVORECIDO := STD.Str.FilterOut(BolsaFamilia.File.CPF_FAVORECIDO, '*.-');
+	BolsaFamilia.File.UF;
 END;
 
-Bolsa_sem_pontos1 := SORT(TABLE(Bolsa.File(CPF_FAVORECIDO <> '' AND NOME_FAVORECIDO <> ''), Layout_BolsaSemPontos), NOME_FAVORECIDO);
-
-Bolsa_sem_pontos := DEDUP(Bolsa_sem_pontos1, NOME_FAVORECIDO);
+Bolsa_F := TABLE(BolsaFamilia.File(CPF_FAVORECIDO <> '' AND NOME_FAVORECIDO <> ''), Layout_Bolsa_Familia_Filtered);
+Bolsa_UV := DEDUP(Bolsa_F, NOME_FAVORECIDO, CPF_FAVORECIDO);
 
 // DATABASE Socios
 // Removendo os registros cujo CPF não está preenchido e tirando a pontuação dos CPF'S/CNPJ'S
-Layout_SociosSemPontos := RECORD
-	cnpj_cpf_socio := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
-	//STRING20 Primeiro_Nome := STD.STr.SplitWords(Socios.File.NOME_SOCIO_RAZAO_SOCIAL,' ')[1];
-	Socios.File;
-	
+Layout_Socios_Filtered := RECORD
+	Socios.file.NOME_SOCIO_RAZAO_SOCIAL;
+	STRING14 CPF_MASC_SOCIO := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
+	Socios.file.QUALIFICACAO_SOCIO;
+	Socios.file.FAIXA_ETARIA;
+	Socios.file.CNPJ_BASICO;
 END;
 
-Socios_sem_pontos := TABLE(Socios.File(cnpj_cpf_socio <> '' AND NOME_SOCIO_RAZAO_SOCIAL <> ''), Layout_SociosSemPontos);
+Socios_F := TABLE(Socios.File(cnpj_cpf_socio <> '' AND NOME_SOCIO_RAZAO_SOCIAL <> ''), Layout_Socios_Filtered);
 
 
-Rec_newsocios := RECORD
-	string69 NOME_FAVORECIDO_BOLSA := '';
-	Socios.File;
+Rec_SociosComBolsa := RECORD
+	Socios_F;
+	STRING2 UF := '';
+	UNSIGNED1 Beneficio := 2;
 END;
 
 
-Rec_newsocios transf(Layout_SociosSemPontos Le, Layout_BolsaSemPontos Ri) := TRANSFORM
-	SELF.NOME_FAVORECIDO_BOLSA := Ri.NOME_FAVORECIDO;
+Rec_SociosComBolsa transf(Layout_Socios_Filtered Le, Layout_Bolsa_Familia_Filtered Ri) := TRANSFORM
 	SELF := Le;
+	SELF.UF := Ri.UF;
 END;
 
 
-Socios_Bolsa := JOIN(Socios_sem_pontos,
-                Bolsa_sem_pontos ,
-                LEFT.cnpj_cpf_socio = RIGHT.CPF_FAVORECIDO  AND LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_FAVORECIDO,
+Socios_Bolsa := JOIN(Socios_F,
+                Bolsa_UV ,
+                LEFT.CPF_MASC_SOCIO = RIGHT.CPF_FAVORECIDO  AND LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_FAVORECIDO,
                 transf(LEFT, RIGHT));
 
 
-OUTPUT(Bolsa_sem_pontos);
-OUTPUT(Socios_sem_pontos);
-OUTPUT(Socios_Bolsa);
-OUTPUT(COUNT(Socios_Bolsa));
-
+OUTPUT(Socios_Bolsa,, '~grupo7::Socios_Bolsa', OVERWRITE, NAMED('JOIN_Socios_e_Bolsa'));
 
 
