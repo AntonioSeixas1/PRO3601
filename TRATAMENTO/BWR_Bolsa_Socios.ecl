@@ -18,7 +18,7 @@ Bolsa_UV := DEDUP(Bolsa_F, NOME_FAVORECIDO, CPF_FAVORECIDO);
 // Removendo os registros cujo CPF não está preenchido e tirando a pontuação dos CPF'S/CNPJ'S
 Layout_Socios_Filtered := RECORD
 	Socios.file.NOME_SOCIO_RAZAO_SOCIAL;
-	STRING14 CPF_MASC_SOCIO := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
+	CPF_MASC_SOCIO := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
 	Socios.file.QUALIFICACAO_SOCIO;
 	Socios.file.FAIXA_ETARIA;
 	Socios.file.CNPJ_BASICO;

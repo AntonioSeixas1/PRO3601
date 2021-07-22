@@ -21,7 +21,7 @@ Auxilio_UV := DEDUP(Auxilio_F, NOME_beneficiario, CPF_beneficiario);
 // Removendo os registros cujo CPF não está preenchido e tirando a pontuação dos CPF'S/CNPJ'S
 Layout_Socios_Filtered := RECORD
 	Socios.file.NOME_SOCIO_RAZAO_SOCIAL;
-	STRING14 CPF_MASC_SOCIO := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
+	CPF_MASC_SOCIO := STD.Str.FilterOut(Socios.File.cnpj_cpf_socio, '*.-');
 	Socios.file.QUALIFICACAO_SOCIO;
 	Socios.file.FAIXA_ETARIA;
 	Socios.file.CNPJ_BASICO;
@@ -52,18 +52,9 @@ Socios_Auxilio := JOIN(Socios_F,
                 LEFT.CPF_MASC_SOCIO = RIGHT.CPF_beneficiario AND LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_beneficiario,
                 transf(LEFT, RIGHT));
 
-// Observacoes
-//Layout_Observacoes := RECORD
-//	Observacao_do_Auxilio_Emergencial:= Socios_Auxilio.Observacao_do_Auxilio_Emergencial;
-//	Contagem := COUNT(GROUP);
-//END;
-
-//CategoriasObservacao := TABLE(Socios_Auxilio, Layout_Observacoes, Observacao_do_Auxilio_Emergencial);
-
 
 
 OUTPUT(Socios_Auxilio,, '~grupo7::Socios_Auxilio', OVERWRITE, NAMED('JOIN_Socios_e_Auxilio'));
-//OUTPUT(CategoriasObservacao, NAMED('Contagem_Observacoes'))
 
 
 
