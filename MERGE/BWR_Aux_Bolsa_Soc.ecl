@@ -31,7 +31,7 @@ Socios_beneficio := JOIN(Socios_auxilio.file,
                 transf(LEFT, RIGHT), FULL OUTER);
 
 // OUTPUT Socios
-OUTPUT(Socios_beneficio, NAMED('Socios_com_Beneficio'));
+OUTPUT(Socios_beneficio,, '~grupo7::Socios_Beneficios', OVERWRITE, NAMED('Socios_com_Beneficio'));
 
 
 // Quantidade de sócios

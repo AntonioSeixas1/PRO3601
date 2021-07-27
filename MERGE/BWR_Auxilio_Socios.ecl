@@ -54,8 +54,8 @@ Socios_Auxilio := JOIN(Socios_F,
 
 
 
-OUTPUT(Socios_Auxilio,, '~grupo7::Socios_Auxilio', OVERWRITE, NAMED('JOIN_Socios_e_Auxilio'));
-
+//OUTPUT(Socios_Auxilio,, '~grupo7::Socios_Auxilio', OVERWRITE, NAMED('JOIN_Socios_e_Auxilio'));
+OUTPUT(Socios_Auxilio)
 
 
 
