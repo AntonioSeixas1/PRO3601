@@ -1,15 +1,15 @@
 ﻿IMPORT $,STD;
 
-E1 := $.File_empresa_1.File;
-E2 := $.File_empresa_2.File;
-E3 := $.File_empresa_3.File;
-E4 := $.File_empresa_4.File;
-E5 := $.File_empresa_5.File;
-E6 := $.File_empresa_6.File;
-E7 := $.File_empresa_7.File;
-E8 := $.File_empresa_8.File;
-E9 := $.File_empresa_9.File;
-E10 := $.File_empresa_10.File;
+E1 := $.File_Empresa_1.File;
+E2 := $.File_Empresa_2.File;
+E3 := $.File_Empresa_3.File;
+E4 := $.File_Empresa_4.File;
+E5 := $.File_Empresa_5.File;
+E6 := $.File_Empresa_6.File;
+E7 := $.File_Empresa_7.File;
+E8 := $.File_Empresa_8.File;
+E9 := $.File_Empresa_9.File;
+E10 := $.File_Empresa_10.File;
 
 E1_s := SORT(E1, E1.CNPJ_BASICO);
 E2_s := SORT(E2, E2.CNPJ_BASICO);
@@ -25,4 +25,4 @@ E10_s := SORT(E10, E10.CNPJ_BASICO);
 
 Empresas := MERGE(E1_s, E2_s, E3_s, E4_s, E5_s, E6_s, E7_s, E8_s, E9_s, E10_s, SORTED(CNPJ_BASICO));
 
-OUTPUT(Empresas,, '~grupo7::empresas');
+OUTPUT(Empresas,, '~grupo7::empresas', OVERWRITE);
