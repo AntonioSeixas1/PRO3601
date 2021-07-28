@@ -1,11 +1,11 @@
 ﻿EXPORT File_Trab_Escravo_opt := MODULE
  EXPORT Layout := RECORD 
  
-    UNSIGNED1 ID;
     UNSIGNED2 Ano_da_acao_fiscal;
     STRING2 UF;
     STRING54 Empregador;
-    STRING18 CNPJ_CPF;
+		STRING18 CNPJ;
+    STRING18 CPF;
     STRING126 Estabelecimento;
     UNSIGNED2 Trabalhadores_envolvidos;
     STRING9 CNAE;
