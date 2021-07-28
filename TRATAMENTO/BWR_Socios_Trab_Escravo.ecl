@@ -1,11 +1,9 @@
-﻿IMPORT $.^.MERGE as M;
-IMPORT $.^.trab_escravos_files as TE;
+﻿IMPORT $.^.JOIN_DATASETS as JD;
+IMPORT $.^.FILES.trab_escravos_files as TE;
 IMPORT STD;
 
-Socios := M.File_MergedSocios.File;
-Trab_Escravo := TE.File_Trab_Escravo_Opt.File;
-
-OUTPUT(Trab_Escravo);
+Socios := JD.File_MergedSocios.File;
+Trab_Escravo := TE.File_Trab_Escravo_Opt.File;							
 
 //Socios:
 Layout_Socios_Filtrado := RECORD
@@ -20,24 +18,20 @@ Layout_Socios_Filtrado := RECORD
 END;
 
 Socios_F := TABLE(Socios, Layout_Socios_Filtrado);
-Socios_S := SORT(Socios_F, nome_socio_razao_social);
 
-Trab_Escravo_S := SORT(Trab_Escravo, Empregador);
+//Socios_S := SORT(Socios, nome_socio_razao_social);
 
-//JOIN 
-Socios_Trab_Escravo := JOIN(Trab_Escravo_S, 
-														Socios_S,
-														LEFT.Empregador = RIGHT.nome_socio_razao_social);
-														
 
 //OUTPUT(Socios_Trab_Escravo, NAMED('JOIN_S_TE'));
 
-Trab_Escravo_S_CNPJ := SORT(Trab_Escravo_S, cnpj);
-Socios_S_CNPJ := SORT(Socios_S, cnpj_basico);
+Trab_Escravo_S_CPF := SORT(Trab_Escravo, cpf);
+Socios_S_CPF := SORT(Socios_F, cpf_socios);
 
 //JOIN com cnpj
-Socios_Trab_Escravo_CNPJ := JOIN(Trab_Escravo_S_CNPJ, 
-																 Socios_S_CNPJ,
-																 STD.Str.Contains(STD.Str.FilterOut(LEFT.cnpj, '*.-/'), RIGHT.cnpj_basico, TRUE), ALL);
+Socios_Trab_Escravo_CNPJ := JOIN(Socios_S_CPF,
+																 Trab_Escravo_S_CPF,
+																 STD.Str.FilterOut(STD.STr.SplitWords(RIGHT.cnpj, '/')[1], '*.-') = LEFT.cnpj_basico);
 																 
+																 
+//STD.Str.FilterOut(RIGHT.cnpj, '*.-')																 
 OUTPUT(Socios_Trab_Escravo_CNPJ, NAMED('JOIN_CNPJ_S_TE'));
