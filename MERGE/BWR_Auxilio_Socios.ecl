@@ -28,11 +28,11 @@ Layout_Socios_Filtered := RECORD
 END;
 
 Socios_F := TABLE(Socios.File(cnpj_cpf_socio <> '' AND NOME_SOCIO_RAZAO_SOCIAL <> ''), Layout_Socios_Filtered);
-
+Socios_UV := DEDUP(Socios_F, NOME_SOCIO_RAZAO_SOCIAL, CPF_MASC_SOCIO, CNPJ_BASICO);
 
 // Nova estrutura RECORD
 Rec_SociosComAuxilio := RECORD
-	Socios_F;
+	Socios_UV;
 	STRING2 UF := '';
 	STRING32 Observacao_do_Auxilio_Emergencial := '';
 	UNSIGNED1 Beneficio := 1; 
@@ -47,15 +47,15 @@ Rec_SociosComAuxilio transf(Layout_Socios_Filtered Le, Layout_Auxilio_Emergencia
 END;
 
 // JOIN DATABASE
-Socios_Auxilio := JOIN(Socios_F,
+Socios_Auxilio := JOIN(Socios_UV,
                 Auxilio_UV ,
-                LEFT.CPF_MASC_SOCIO = RIGHT.CPF_beneficiario AND LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_beneficiario,
+                LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_beneficiario AND LEFT.CPF_MASC_SOCIO = RIGHT.CPF_beneficiario,
                 transf(LEFT, RIGHT));
 
 
 
-//OUTPUT(Socios_Auxilio,, '~grupo7::Socios_Auxilio', OVERWRITE, NAMED('JOIN_Socios_e_Auxilio'));
-OUTPUT(Socios_Auxilio)
+OUTPUT(Socios_Auxilio,, '~grupo7::Socios_Auxilio', OVERWRITE, NAMED('JOIN_Socios_e_Auxilio'));
+//OUTPUT(Socios_Auxilio)
 
 
 
