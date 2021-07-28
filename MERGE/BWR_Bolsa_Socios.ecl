@@ -25,10 +25,10 @@ Layout_Socios_Filtered := RECORD
 END;
 
 Socios_F := TABLE(Socios.File(cnpj_cpf_socio <> '' AND NOME_SOCIO_RAZAO_SOCIAL <> ''), Layout_Socios_Filtered);
-
+Socios_UV := DEDUP(Socios_F, NOME_SOCIO_RAZAO_SOCIAL, CPF_MASC_SOCIO, CNPJ_BASICO);
 
 Rec_SociosComBolsa := RECORD
-	Socios_F;
+	Socios_UV;
 	STRING2 UF := '';
 	UNSIGNED1 Beneficio := 2;
 END;
@@ -40,9 +40,9 @@ Rec_SociosComBolsa transf(Layout_Socios_Filtered Le, Layout_Bolsa_Familia_Filter
 END;
 
 
-Socios_Bolsa := JOIN(Socios_F,
+Socios_Bolsa := JOIN(Socios_UV,
                 Bolsa_UV ,
-                LEFT.CPF_MASC_SOCIO = RIGHT.CPF_FAVORECIDO  AND LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_FAVORECIDO,
+                LEFT.NOME_SOCIO_RAZAO_SOCIAL = RIGHT.NOME_FAVORECIDO AND LEFT.CPF_MASC_SOCIO = RIGHT.CPF_FAVORECIDO,
                 transf(LEFT, RIGHT));
 
 
