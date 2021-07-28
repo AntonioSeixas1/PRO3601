@@ -5,8 +5,6 @@ Trab_Escravo := TE.File_Trabalho_Escravo.File;
 
 //OBS: No Empregador também há nomes de empresas, além de nomes de pessoas
 
-
-
 //Separando em CPF e CNPJ em duas colunas duas colunas
 Layout_Trab_Escravo_Filtered := RECORD
 	Trab_Escravo.ano_da_acao_fiscal;
