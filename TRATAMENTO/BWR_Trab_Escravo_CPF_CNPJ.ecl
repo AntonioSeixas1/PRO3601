@@ -30,4 +30,4 @@ Trab_Escravo_F := TABLE(Trab_Escravo, Layout_Trab_Escravo_Filtered);
 //STD.Str.FindReplace(Trab_Escravo_F.Empregador, 'Ú', 'U');
 //STD.Str.FindReplace(Trab_Escravo_F.Empregador, 'Ç', 'C');
 
-OUTPUT(Trab_Escravo_F)
+OUTPUT(Trab_Escravo_F,, '~grupo7::trab_escravo_opt', OVERWRITE);
