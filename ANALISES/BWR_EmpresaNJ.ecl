@@ -4,7 +4,7 @@ Tabela := $.File_Natureza_Juridica.file;
 Empresas := JD.File_MergedEmpresas.file;
 
 Total := COUNT(Empresas);
-Total_F := COUNT( Empresas(NATUREZA_JURIDICA <> 2135));
+Total_F := COUNT( Empresas(NATUREZA_JURIDICA <> 2135 and NATUREZA_JURIDICA <> 4090));
 
 Layout_Natureza_Juridica := RECORD
 	Codigo:= Empresas.NATUREZA_JURIDICA;
@@ -26,11 +26,7 @@ Layout_Natureza_Juridica_F := RECORD
 	nome_natureza_juridica := Natureza_Juridica_s.nome_natureza_juridica; 
 END;
 
-Natureza_Juridica_F := TABLE( Natureza_Juridica_s( codigo <> 2135), Layout_Natureza_Juridica_F);
-
-
-
-
+Natureza_Juridica_F := TABLE( Natureza_Juridica_s( codigo <> 2135 and codigo <> 4090), Layout_Natureza_Juridica_F);
 
 OUTPUT(Natureza_Juridica_s, NAMED('Natureza_Juridica_Total'));
 OUTPUT(Natureza_Juridica_f, NAMED('Natureza_Juridica_Filtrado'));
