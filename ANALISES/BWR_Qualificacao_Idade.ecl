@@ -1,9 +1,10 @@
 ﻿IMPORT $;
+IMPORT $.^. JOIN_DATASETs as JD;
 
 Qualificacoes := $.File_Qualificacao_Socios.File;
-Empresas := $.File_MergedEmpresas.File;
-Socios_Beneficios := $.File_Socios_Beneficios.File;
-Socios := $.File_MergedSocios.File;
+Empresas := JD.File_MergedEmpresas.File;
+Socios_Beneficios := JD.File_Socios_Beneficios.File;
+Socios := JD.File_MergedSocios.File;
 
 Total := COUNT(Socios);
 

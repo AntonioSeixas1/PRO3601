@@ -1,7 +1,8 @@
 ﻿IMPORT $,STD;
+IMPORT $.^. JOIN_DATASETs as JD;
 
-Empresas := $.File_MergedEmpresas.File;
-Socios_Beneficios := $.File_Socios_Beneficios.File;
+Empresas := JD.File_MergedEmpresas.File;
+Socios_Beneficios := JD.File_Socios_Beneficios.File;
 
 // DATABASE Empresas
 // Removendo os registros cujo CNPJ não está informado e retirando campos inúteis 
