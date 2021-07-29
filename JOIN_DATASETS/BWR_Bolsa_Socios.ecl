@@ -33,7 +33,6 @@ Rec_SociosComBolsa := RECORD
 	UNSIGNED1 Beneficio := 2;
 END;
 
-
 Rec_SociosComBolsa transf(Layout_Socios_Filtered Le, Layout_Bolsa_Familia_Filtered Ri) := TRANSFORM
 	SELF := Le;
 	SELF.UF := Ri.UF;
