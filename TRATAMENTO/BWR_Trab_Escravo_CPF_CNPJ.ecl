@@ -1,15 +1,15 @@
-﻿IMPORT $.^.trab_escravos_files AS TE;
+﻿IMPORT $.^.FILES.trab_escravos_files AS TE;
 IMPORT STD;
 
 Trab_Escravo := TE.File_Trabalho_Escravo.File;
 
 //OBS: No Empregador também há nomes de empresas, além de nomes de pessoas
 
-//Separando em CPF e CNPJ em duas colunas duas colunas
+//Separando em CPF e CNPJ em duas colunas duas colunas e tirando os acentos do nome
 Layout_Trab_Escravo_Filtered := RECORD
 	Trab_Escravo.ano_da_acao_fiscal;
 	Trab_Escravo.UF;
-	Empregador := STD.Str.ToUpperCase(STD.Str.FindReplace(Trab_Escravo.Empregador, 'Ã¡', 'A'));
+	Empregador := STD.Str.ToUpperCase(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(STD.Str.FindReplace(Trab_Escravo.Empregador, 'Ã¡', 'A'), 'Ã§', 'C'), 'Ã£', 'A'), 'Ã³', 'O'), 'Ã©', 'E'), 'Ã´', 'O'), 'Ã¢', 'A'), 'Ã­', 'I'), 'Ãº', 'U'), 'Ã±', 'N'), 'Ãµ', 'O'));
 	CNPJ := IF(STD.Str.Contains(Trab_Escravo.CNPJ_CPF, '/', False), Trab_Escravo.CNPJ_CPF, '');
 	CPF := IF(STD.Str.Contains(Trab_Escravo.CNPJ_CPF, '/', False), '', Trab_Escravo.CNPJ_CPF);
 	Trab_Escravo.Estabelecimento;

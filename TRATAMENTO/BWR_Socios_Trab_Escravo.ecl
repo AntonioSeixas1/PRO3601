@@ -3,7 +3,7 @@ IMPORT $.^.FILES.trab_escravos_files as TE;
 IMPORT STD;
 
 Socios := JD.File_MergedSocios.File;
-Trab_Escravo := TE.File_Trab_Escravo_Opt.File;							
+Trab_Escravo := TE.File_Trab_Escravo_Opt.File;
 
 //Socios:
 Layout_Socios_Filtrado := RECORD
@@ -17,21 +17,19 @@ Layout_Socios_Filtrado := RECORD
 	Socios.faixa_etaria;
 END;
 
-Socios_F := TABLE(Socios, Layout_Socios_Filtrado);
-
+Socios_F := TABLE(Socios(STD.Str.FilterOut(Socios.cnpj_cpf_socio, '*.-') <> ''), Layout_Socios_Filtrado);
 //Socios_S := SORT(Socios, nome_socio_razao_social);
 
+Trab_Escravo_S := SORT(Trab_Escravo, Empregador, cpf);
 
-//OUTPUT(Socios_Trab_Escravo, NAMED('JOIN_S_TE'));
+//JOIN com Nome e CPF
+Socios_Trab_Escravo_NOME_CPF := JOIN(Trab_Escravo_S, 
+														Socios_F,
+														LEFT.Empregador = RIGHT.nome_socio_razao_social AND STD.Str.FilterOut(LEFT.cpf, '*.-')[4..9] = RIGHT.cpf_socios);
 
-Trab_Escravo_S_CPF := SORT(Trab_Escravo, cpf);
-Socios_S_CPF := SORT(Socios_F, cpf_socios);
+OUTPUT(Socios_Trab_Escravo_NOME_CPF,, '~grupo7::Socios_Trab_Escravo', OVERWRITE, NAMED('JOIN_S_TE_NOME_CPF')); //Exportar //101 casos
 
-//JOIN com cnpj
-Socios_Trab_Escravo_CNPJ := JOIN(Socios_S_CPF,
-																 Trab_Escravo_S_CPF,
-																 STD.Str.FilterOut(STD.STr.SplitWords(RIGHT.cnpj, '/')[1], '*.-') = LEFT.cnpj_basico);
-																 
-																 
-//STD.Str.FilterOut(RIGHT.cnpj, '*.-')																 
-OUTPUT(Socios_Trab_Escravo_CNPJ, NAMED('JOIN_CNPJ_S_TE'));
+DeDupSocios_Trab_Escravo := DEDUP(Socios_trab_Escravo_NOME_CPF, LEFT.Empregador = RIGHT.Empregador);
+
+//Pegando apenas um Empregador para análise de Sócios - descartando a análise de empresas
+OUTPUT(DeDupSocios_Trab_Escravo,, '~grupo7::DEDUP_Socios_Trab_Escravo', OVERWRITE, NAMED('DEDUP_SOCIOS_TE'));
