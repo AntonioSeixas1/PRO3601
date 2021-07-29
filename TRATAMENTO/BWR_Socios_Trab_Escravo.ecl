@@ -27,7 +27,21 @@ Socios_Trab_Escravo_NOME_CPF := JOIN(Trab_Escravo_S,
 														Socios_F,
 														LEFT.Empregador = RIGHT.nome_socio_razao_social AND STD.Str.FilterOut(LEFT.cpf, '*.-')[4..9] = RIGHT.cpf_socios);
 
-OUTPUT(Socios_Trab_Escravo_NOME_CPF,, '~grupo7::Socios_Trab_Escravo', OVERWRITE, NAMED('JOIN_S_TE_NOME_CPF')); //Exportar //101 casos
+Layout_S_TE_Filtrado := RECORD
+	Socios_Trab_Escravo_NOME_CPF.Empregador;
+	Socios_Trab_Escravo_NOME_CPF.cpf;
+	Socios_Trab_Escravo_NOME_CPF.cnpj_basico;
+	Socios_Trab_Escravo_NOME_CPF.trabalhadores_envolvidos;
+	Socios_Trab_Escravo_NOME_CPF.uf;
+	Socios_Trab_Escravo_NOME_CPF.ano_da_acao_fiscal;
+	Socios_Trab_Escravo_NOME_CPF.cnae;
+	Socios_Trab_Escravo_NOME_CPF.qualificacao_socio;
+	Socios_Trab_Escravo_NOME_CPF.faixa_etaria;
+END;
+
+Socios_Trab_Escravo_NOME_CPF_F := TABLE(Socios_Trab_Escravo_NOME_CPF, Layout_S_TE_Filtrado);
+
+OUTPUT(Socios_Trab_Escravo_NOME_CPF_F,, '~grupo7::Socios_Trab_Escravo', OVERWRITE, NAMED('JOIN_S_TE_NOME_CPF')); //101 casos
 
 DeDupSocios_Trab_Escravo := DEDUP(Socios_trab_Escravo_NOME_CPF, LEFT.Empregador = RIGHT.Empregador);
 
