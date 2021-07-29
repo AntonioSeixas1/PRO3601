@@ -25,3 +25,12 @@ Identificar preventivamente possíveis inconsistências cadastrais e/ou fraudes,
 - Estabelecimentos_TrabEscravo: Esta base correlaciona quais estabelicimentos foram denunciados por oferecer condições de trabalho análogas a escravidão.
 - Socios_TrabEscravo: Esta base correlaciona quais sócios foram denunciados por oferecer condições de trabalho análogas a escravidão.
 
+## Caminhos para cada base
+- ECL Watch(já submetido)
+  - Socios_Beneficios_PorEmpresa -> "grupo7::socios_beneficios_porempresa"
+  - Estabelecimentos_TrabEscravo -> "grupo7::estabelecimentos_trabescravo"
+  - Socios_TrabEscravo -> "grupo7::socios_trabescravo"
+- Diretório Local(BWR's)
+  - Socios_Beneficios_PorEmpresa -> PRO3601\JOIN_DATASETS\BWR_Socios_Beneficios.ecl
+  - Estabelecimentos_TrabEscravo -> PRO3601\TRATAMENTO\BWR_Estabelecimentos_TrabEscravo.ecl
+  - Socios_TrabEscravo -> PRO3601\TRATAMENTO\BWR_Socios_Trab_Escravo.ecl
